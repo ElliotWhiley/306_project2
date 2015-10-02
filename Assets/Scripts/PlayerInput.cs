@@ -50,9 +50,6 @@ public class PlayerInput : MonoBehaviour
 	 */
 
     void Update() {
-
-        Debug.Log(Input.GetAxisRaw("Horizontal"));
-
 		//Vertical collision detection. If the player touches the ground or ceiling set vertical velocity to zero.
         if (TouchingGround() || TouchingCeiling()) {
             velocity.y = 0;
