@@ -5,7 +5,7 @@ public class GameCamera : MonoBehaviour {
     public GameObject camObject;
     public GameObject player;
     public Vector3 updatePosition;
-    public float smoothSpeed;
+    float smoothSpeed = 10f; // Camera update speed
  
 	// Initialise the camera object
 	void Start () {
