@@ -4,7 +4,7 @@ using System.Collections;
 public class PauseMenu : MonoBehaviour {
 
 	public bool isPaused;
-
+	public bool disabled;
 	public GameObject pauseMenuCanvas;
 
 
@@ -19,7 +19,7 @@ public class PauseMenu : MonoBehaviour {
 			Time.timeScale = 1f;
 		}
 			
-		if (Input.GetKeyDown(KeyCode.Escape)) {
+		if (Input.GetKeyDown(KeyCode.Escape) && (disabled == false)){
 			isPaused = !isPaused;
 		}
 	}
