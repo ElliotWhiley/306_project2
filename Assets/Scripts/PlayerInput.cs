@@ -9,11 +9,19 @@ using System.Collections;
 [RequireComponent(typeof(LevelManager))]
 public class PlayerInput : MonoBehaviour {
 
+	//Key bindings
+	public KeyCode jumpKey = KeyCode.Space;
+	public KeyCode glideKey = KeyCode.LeftShift;
+
+	//Varible defaults
 	float jumpHeight = 3f;
 	float timeToJumpApex = .4f;
 	float accelerationTimeGrounded = .08f;
-	float moveSpeed = 6;
+	float moveSpeed = 6f;
+	float glideSpeed = 3f;
 	float slidingCoefficient = 0.2f;
+	float glidingFallSpeed = -2.5f;
+	//Make this an enum
 	float airborneAccelSlow = .35f;
 	float airborneAccelFast = 0.13f;
 
@@ -31,26 +39,29 @@ public class PlayerInput : MonoBehaviour {
 	public DeathCount deathCount;
 	public int numberOfDeath;
 	public AudioClip[] audioClip;
+	public Animator animator;
 
 	PlayerPhysics controller;
 	AudioSource audio;
+	Animation anim;
 
 	/**Initialisation */
 	void Start () {
 		//The controller is what handles our movement in the game world
 		controller = GetComponent<PlayerPhysics> ();
 		audio = GetComponent<AudioSource> ();
+		anim = GetComponent<Animation> ();
+		animator = GetComponent<Animator> ();
 
 		//Gravity setup
 		gravity = -(2 * jumpHeight) / Mathf.Pow (timeToJumpApex, 2);
 		jumpVelocity = Mathf.Abs (gravity) * timeToJumpApex;
 		accelerationTimeAirborne = airborneAccelFast;
-
-		//Player ability setup
-		airCharge = 0;
+		anim.Stop ();
 
 		//Delay and player statistics
 		delay = 3;
+		airCharge = 0;
 		numberOfDeath = 0;
 
 		//Collision checking for wall sliding speed
@@ -69,6 +80,9 @@ public class PlayerInput : MonoBehaviour {
 		if (IsWaiting () || IsPaused ()) {
 			return;
 		}
+
+		//Default to the idle animation
+		//anim.Play ("Idle");
 
 		//Checks if the player just collided with a wall to reset vertical sliding speed
 		CheckCollisions ();
@@ -109,7 +123,7 @@ public class PlayerInput : MonoBehaviour {
 		}
 
 		//When the jump button is pressed.
-		if (Input.GetKeyDown (KeyCode.Space)) { //Simply jump if the object is on the ground. 
+		if (Input.GetKeyDown (jumpKey)) { //Simply jump if the object is on the ground. 
 			if (TouchingGround ()) {
 				PlaySound (0);
 				accelerationTimeAirborne = airborneAccelFast; //Update direction change speed
@@ -138,8 +152,18 @@ public class PlayerInput : MonoBehaviour {
 		//Player accelerates towards top speed in the direction specified by input
 		velocity.x = Mathf.SmoothDamp (velocity.x, targetVelocityX, ref velocityXSmoothing, (controller.collisions.below) ? accelerationTimeGrounded : accelerationTimeAirborne);
 
+		//Gliding sets a constant glidespeed
+		if (Input.GetKey (glideKey) && airCharge == 0 && velocity.y < 0) {
+			//Cannot be touching a wall to glide
+			if (!TouchingWall () && !TouchingGround ()) {
+				anim.Play ("Glide");
+				velocity.y = glidingFallSpeed;
+				targetVelocityX /= 2;
+
+			}
+		}
 		//Gravity is applied
-		if (TouchingWall () && velocity.y < 2) {
+		else if (TouchingWall () && velocity.y < 2) {
 			//Lower wall sliding speed if the player is falling faster than the sliding speed.
 			if (collisionEnter && velocity.y < 0) {
 				//Reduce verical velocity by a factor of 10
