@@ -10,8 +10,13 @@ public class EndPoint : MonoBehaviour {
 	AudioSource audio;
 	public bool isPaused;
 
+	public int totalCoins;
+
 	// Use this for initialization
 	void Start () {
+
+		totalCoins = PlayerPrefs.GetInt ("TotalCoins");
+
 		audio = GetComponent<AudioSource> ();
 		isPaused = false;
 	}
@@ -33,6 +38,8 @@ public class EndPoint : MonoBehaviour {
 			StartCoroutine (Example ());
 			endMenu.display ();
 			endMenuCanvas.SetActive (true);
+			accumulateCoinsCollected(endMenu.coinCount.coinCount);
+			displayCoinsCollected();
 		}
 	}
 
@@ -43,5 +50,14 @@ public class EndPoint : MonoBehaviour {
 
 	IEnumerator Example () {
 		yield return new WaitForSeconds (30);
+	}
+
+	public void accumulateCoinsCollected(int c){
+		totalCoins = totalCoins + c;
+		PlayerPrefs.SetInt ("TotalCoins", totalCoins); 
+	}
+	
+	public void displayCoinsCollected(){
+		print ("Total amount of coins: " + totalCoins);
 	}
 }
