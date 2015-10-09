@@ -1,5 +1,0 @@
-language: csharp
-script:    # Run scripts to install and build unity web project
-  - ./install.sh
-  - ./build.sh
-  - grep "Results" build.log
