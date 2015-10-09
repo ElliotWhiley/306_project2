@@ -1,6 +1,5 @@
 language: csharp
-#solution: solution-name.sln
-#script:    # the following commands are just examples, use whatever your build process requires
-#  - ./build.sh
-#  - ./test.sh
-#  - grep "Test Results" build.log
+script:    # Run scripts to install and build unity web project
+  - ./install.sh
+  - ./build.sh
+  - grep "Results" build.log
