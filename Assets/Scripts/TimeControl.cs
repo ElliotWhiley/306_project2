@@ -6,7 +6,7 @@ public class TimeControl : MonoBehaviour {
 
 	public Text text;
 
-	private float time;
+	public float time;
 	private float delay;
 	private float minute;
 	private float second;

@@ -35,8 +35,8 @@ public class EndMenu : MonoBehaviour {
 	}
 
 	public void replayTheStage () {
-		Application.LoadLevel ("level1");
-	}
+        Application.LoadLevel(Application.loadedLevelName);
+    }
 
 	public void continueWithNext () {
 		Application.LoadLevel ("level_select");

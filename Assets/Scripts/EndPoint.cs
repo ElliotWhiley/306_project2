@@ -25,7 +25,28 @@ public class EndPoint : MonoBehaviour {
 
 	void OnTriggerEnter2D (Collider2D other) {
 		if (other.tag == "Player") {
-			PlaySound (0);
+
+            Debug.Log(endMenu.timeControl.time + "");
+            Debug.Log(Application.loadedLevelName);
+
+            //16 seconds cutoff to unlock level 2
+            if (endMenu.timeControl.time < 16 && Application.loadedLevelName.Equals("level1"))
+            {
+                PlayerPrefs.SetString("Level2Locked", "false");
+            }
+            //1 minute cutoff to unlock level 3
+            else if (endMenu.timeControl.time < 60 && Application.loadedLevelName.Equals("level2"))
+            {
+                PlayerPrefs.SetString("Level3Locked", "false");
+            }
+            //2 minutes cutoff to unlock level 4
+            else if (endMenu.timeControl.time < 120 && Application.loadedLevelName.Equals("level3"))
+            {
+                PlayerPrefs.SetString("Level4Locked", "false");
+            }
+
+
+            PlaySound (0);
 			pauseMenu.disabled = true;
 			isPaused = true;
 			StartCoroutine (Example ());
