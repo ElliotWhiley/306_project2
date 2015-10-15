@@ -9,6 +9,7 @@ public class EndPoint : MonoBehaviour {
 	public AudioClip[] audioClip;
 	AudioSource audio;
 	public bool isPaused;
+    string level;
 
 	// Use this for initialization
 	void Start () {
@@ -30,7 +31,23 @@ public class EndPoint : MonoBehaviour {
 			isPaused = true;
 			endMenu.display ();
 			endMenuCanvas.SetActive (true);
-		}
+
+            // Set local storage to unlock next level (remove padlock from Level Select GUI)
+            level = Application.loadedLevelName;
+            switch (level) {
+                case "level1":
+                    PlayerPrefs.SetString("level2Locked", "false");
+                    break;
+                case "level2":
+                    PlayerPrefs.SetString("level3Locked", "false");
+                    break;
+                case "level3":
+                    PlayerPrefs.SetString("level4Locked", "false");
+                    break;
+                default:
+                    break;
+            }
+        }
 	}
 
 	void PlaySound (int clip) {
