@@ -4,8 +4,12 @@ using System;
 
 public class DatabaseManager : MonoBehaviour {
 
+    public GameObject ProgressCircle;
+
     public void PostScore(string level, string name, string time)
     {
+        ProgressCircle.SetActive(true);
+
         string url = "https://microsoft-apiapp72ef49a46b6242d28d294f2cda80c2cf.azurewebsites.net/api/Values";
         WWWForm form = new WWWForm();
         form.AddField("level", level);
@@ -29,5 +33,6 @@ public class DatabaseManager : MonoBehaviour {
         {
             Debug.Log("WWW Error: " + www.error);
         }
+        ProgressCircle.SetActive(false);
     }
 }
