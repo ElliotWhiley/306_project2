@@ -8,6 +8,7 @@ public class LevelSelectManager : MonoBehaviour {
     string level3Locked;
     string level4Locked;
     public GameObject canvas;
+    float best;
 
     // Custom colors
     Color yellow = new Color(255f, 248f, 0f);
@@ -36,24 +37,28 @@ public class LevelSelectManager : MonoBehaviour {
     // Level 4 stars
     public GameObject star41;
     public GameObject star42;
-    public GameObject star43 ;
+    public GameObject star43;
 
     // Level button lock images
     public GameObject lock2;
     public GameObject lock3;
     public GameObject lock4;
 
+    // Set time required to unlock Bronze/Silver/Gold star rating for each level
+    float[,] benchmark = new float[3, 4] { { 90, 120, 180, 60 }, { 20, 50, 90, 45 }, { 15, 35, 45, 30 } };
+
 
     // Use this for initialization
     void Start () {
+        // Set stars for level 1 based on player's best time
+        setStars(1, star11, star12, star13);
+
         level2Locked = PlayerPrefs.GetString("level2Locked");
         // If level 2 is unlocked, allow user to click level 2, hide the lock and show the stars
         if (level2Locked.Equals("false")) {
             level2Button.interactable = true;
             lock2.SetActive(false);
-            star21.SetActive(true);
-            star22.SetActive(true);
-            star23.SetActive(true);
+            setStars(2, star21, star22, star23);
         }
 
         level3Locked = PlayerPrefs.GetString("level3Locked");
@@ -61,9 +66,7 @@ public class LevelSelectManager : MonoBehaviour {
         if (level3Locked.Equals("false")) {
             level3Button.interactable = true;
             lock3.SetActive(false);
-            star31.SetActive(true);
-            star32.SetActive(true);
-            star33.SetActive(true);
+            setStars(3, star31, star32, star33);
         }
 
         level4Locked = PlayerPrefs.GetString("level4Locked");
@@ -71,15 +74,30 @@ public class LevelSelectManager : MonoBehaviour {
         if (level4Locked.Equals("false")) {
             level4Button.interactable = true;
             lock4.SetActive(false);
-            star41.SetActive(true);
-            star42.SetActive(true);
-            star43.SetActive(true);
+            setStars(4, star41, star42, star43);
         }
     }
 	
-    // 
-    void setStars(string level, GameObject star1, GameObject star2, GameObject star3) {
-        string best;
+    // Set stars to gold to mirror player's best time for specified level
+    void setStars(int level, GameObject star1, GameObject star2, GameObject star3) {
+        // Display stars on level icons
+        star1.SetActive(true);
+        star2.SetActive(true);
+        star3.SetActive(true);
+        // Get player's best time for specified level
+        best = PlayerPrefs.GetFloat("level" + level.ToString() + "Best");
+        // Check that best time is not 0 (i.e. not set yet), and color the stars according to their performance
+        if (best != 0) {
+            if (best <= benchmark[0, level - 1]) {
+                star1.GetComponent<Image>().color = yellow;
+            }
+            if (best <= benchmark[1, level - 1]) {
+                star2.GetComponent<Image>().color = yellow;
+            }
+            if (best <= benchmark[2, level - 1]) {
+                star3.GetComponent<Image>().color = yellow;
+            }
+        }
     }
 
 }
