@@ -28,7 +28,6 @@ public class EndPoint : MonoBehaviour {
 			PlaySound (0);
 			pauseMenu.disabled = true;
 			isPaused = true;
-			StartCoroutine (Example ());
 			endMenu.display ();
 			endMenuCanvas.SetActive (true);
 		}
@@ -37,9 +36,5 @@ public class EndPoint : MonoBehaviour {
 	void PlaySound (int clip) {
 		audio.clip = audioClip [clip];
 		audio.Play ();
-	}
-
-	IEnumerator Example () {
-		yield return new WaitForSeconds (30);
 	}
 }

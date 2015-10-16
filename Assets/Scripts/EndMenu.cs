@@ -44,10 +44,10 @@ public class EndMenu : MonoBehaviour {
 		Application.LoadLevel ("level_select");
 	}
 
-    public void uploadScore()
+    public void uploadScore(string level)
     {
         Debug.Log("Uploading Score..."); //need a better way of displaying upload is complete.
-        dbManager.PostScore("1", playerName.text, timeText.text);
+        dbManager.PostScore(level, playerName.text, timeText.text);
         Debug.Log("Upload complete!");
     }
 }

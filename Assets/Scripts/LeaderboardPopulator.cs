@@ -24,7 +24,7 @@ public class LeaderboardPopulator : MonoBehaviour {
         CList.Add(CL3);
         CList.Add(CL4);
 
-        for (int i = 0; i < 1; i++)    //change i to 4 later
+        for (int i = 0; i < 4; i++)    //change i to 4 later
         {
             for (int j = 0; j < 8; j++)
             {
@@ -34,10 +34,22 @@ public class LeaderboardPopulator : MonoBehaviour {
 
         string url = "https://microsoft-apiapp72ef49a46b6242d28d294f2cda80c2cf.azurewebsites.net/api/Values/1";
         WWW www = new WWW(url);
-        StartCoroutine(WaitForRequest(www));
+        StartCoroutine(WaitForRequest(www, 1));
+    
+        string url2 = "https://microsoft-apiapp72ef49a46b6242d28d294f2cda80c2cf.azurewebsites.net/api/Values/2";
+        WWW www2 = new WWW(url2);
+        StartCoroutine(WaitForRequest(www2, 2));
+
+        string url3 = "https://microsoft-apiapp72ef49a46b6242d28d294f2cda80c2cf.azurewebsites.net/api/Values/3";
+        WWW www3 = new WWW(url3);
+        StartCoroutine(WaitForRequest(www3, 3));
+
+        string url4 = "https://microsoft-apiapp72ef49a46b6242d28d294f2cda80c2cf.azurewebsites.net/api/Values/4";
+        WWW www4 = new WWW(url4);
+        StartCoroutine(WaitForRequest(www4, 4)); 
     }
 
-    IEnumerator WaitForRequest(WWW www)
+    IEnumerator WaitForRequest(WWW www, int levelNumber)
     {
         yield return www;
         // check for errors
@@ -47,18 +59,13 @@ public class LeaderboardPopulator : MonoBehaviour {
             Debug.Log("Fetched: " + www.text);
             JSONObject obj = new JSONObject(www.text);
 
-            for (int i = 0; i < 1; i++)
+            for (int j = 0; j < obj.list.Count; j++)
             {
-                for (int j = 0; j < obj.list.Count; j++)
-                {
-                    string name = obj.list[j].list[0].str;
-                    string time = obj.list[j].list[1].str;
+                string name = obj.list[j].list[0].str;
+                string time = obj.list[j].list[1].str;
 
-                    TList2D[j, i].Player.text = name;
-                    TList2D[j, i].Time.text = time;
-                    //TList[i].setPlayer(name);
-                    //Debug.Log(time);
-                }
+                TList2D[j, levelNumber - 1].Player.text = name;
+                TList2D[j, levelNumber - 1].Time.text = time;
             }
         }
         else
