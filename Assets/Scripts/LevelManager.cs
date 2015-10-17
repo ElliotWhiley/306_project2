@@ -33,7 +33,7 @@ public class LevelManager : MonoBehaviour {
 		if (other.gameObject.tag == "Player") {
 			HandleDeath ();
 		}
-		Debug.Log ("object left the game area");
+		//Debug.Log ("object left the game area");
 	}
 
 	public void HandleDeath () {

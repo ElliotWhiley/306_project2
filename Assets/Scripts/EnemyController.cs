@@ -84,12 +84,12 @@ public class EnemyController : MonoBehaviour {
 	void OnTriggerEnter2D (Collider2D collision) {
 		//When collision is detected with player, execute death of player
 		if (collision.gameObject.tag == "Player") {
-			Debug.Log ("Bang");
+		//	Debug.Log ("Bang");
 			levelManager.HandleDeath ();
 		}
 		//When collision is detected with edge invisible wall, determine atEdge to be true
 		if (collision.gameObject.tag == "PatrolBoundary") {
-			Debug.Log ("Invisible Wall");
+		//	Debug.Log ("Invisible Wall");
 			atEdge = true;
 		}
 	}

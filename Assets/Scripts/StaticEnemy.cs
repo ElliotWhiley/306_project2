@@ -20,7 +20,7 @@ public class StaticEnemy : MonoBehaviour {
         //When collision is detected with player, execute death of player
         if (collision.gameObject.tag == "Player")
         {
-            Debug.Log("Ouch");
+            //Debug.Log("Ouch");
             levelManager.HandleDeath();
         }
     }

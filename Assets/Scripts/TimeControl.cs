@@ -6,17 +6,22 @@ public class TimeControl : MonoBehaviour {
 
 	public Text text;
 
-	private float time;
+	public float time;
+    public float coinCollected = 0;
+
 	private float delay;
 	private float minute;
 	private float second;
 	private bool playerCanMove;
+    private bool stopTimer;
 
 	// Use this for initialization
 	void Start () {
 		text.text = "0";
 		playerCanMove = false;
-		delay = 3;  
+        stopTimer = false;
+		delay = 3;
+        coinCollected = 0;
 	}
 	
 	// Update is called once per frame
@@ -39,40 +44,63 @@ public class TimeControl : MonoBehaviour {
 			text.text = "0:00.000";
 			return;
 		}
-        
-		time = Time.timeSinceLevelLoad - delay;
-		minute = 0;
-		second = time;
 
-		//Get the number of minutes and seconds if the time is over a minute.
-		if (second >= 60) {
-			minute = Mathf.Floor (time / 60);
-			second = time % 60;
-		}
-        
-		if (time < 60) {
-			if (time < 10) {
-				text.text = "0" + ":" + "0" + second.ToString ("F3");
-			} else {
-				text.text = "0" + ":" + second.ToString ("F3");
-			}
-		}
+        if (stopTimer == false)
+        {
+            time = Time.timeSinceLevelLoad - delay - coinCollected;
+            minute = 0;
+            second = time;
 
-        //time over a minute
-        else if (time >= 60) {
-			if (minute < 10) {
-				if (second < 10) {
-					text.text = minute.ToString ("F0") + ":" + "0" + second.ToString ("F3");
-				} else {
-					text.text = minute.ToString ("F0") + ":" + second.ToString ("F3");
-				}
-			} else {
-				if (second < 10) {
-					text.text = minute.ToString ("F0") + ":" + "0" + second.ToString ("F3");
-				} else {
-					text.text = minute.ToString ("F0") + ":" + second.ToString ("F3");
-				}
-			}
-		}
+            //Get the number of minutes and seconds if the time is over a minute.
+            if (second >= 60)
+            {
+                minute = Mathf.Floor(time / 60);
+                second = time % 60;
+            }
+
+            if (time < 60)
+            {
+                if (time < 10)
+                {
+                    text.text = "0" + ":" + "0" + second.ToString("F3");
+                }
+                else
+                {
+                    text.text = "0" + ":" + second.ToString("F3");
+                }
+            }
+
+            //time over a minute
+            else if (time >= 60)
+            {
+                if (minute < 10)
+                {
+                    if (second < 10)
+                    {
+                        text.text = minute.ToString("F0") + ":" + "0" + second.ToString("F3");
+                    }
+                    else
+                    {
+                        text.text = minute.ToString("F0") + ":" + second.ToString("F3");
+                    }
+                }
+                else
+                {
+                    if (second < 10)
+                    {
+                        text.text = minute.ToString("F0") + ":" + "0" + second.ToString("F3");
+                    }
+                    else
+                    {
+                        text.text = minute.ToString("F0") + ":" + second.ToString("F3");
+                    }
+                }
+            }
+        }
 	}
+
+    public void StopTimer()
+    {
+        stopTimer = true;
+    }
 }
