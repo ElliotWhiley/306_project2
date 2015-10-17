@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: cf6b8aa0efe952e458ae4ba8cdba0a9b
-timeCreated: 1443178979
+guid: 3a67362401e9343688ef0d99a01e912d
+timeCreated: 1445052647
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -69,7 +69,7 @@ TextureImporter:
         width: 64
         height: 61
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: slime_1
       rect:
@@ -79,7 +79,7 @@ TextureImporter:
         width: 67
         height: 60
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: slime_2
       rect:
@@ -89,7 +89,7 @@ TextureImporter:
         width: 57
         height: 65
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: slime_3
       rect:
@@ -99,7 +99,7 @@ TextureImporter:
         width: 60
         height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: slime_4
       rect:
@@ -109,7 +109,7 @@ TextureImporter:
         width: 57
         height: 60
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: slime_5
       rect:
@@ -119,7 +119,7 @@ TextureImporter:
         width: 59
         height: 61
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: slime_6
       rect:
@@ -129,7 +129,7 @@ TextureImporter:
         width: 65
         height: 57
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: slime_7
       rect:
@@ -139,7 +139,7 @@ TextureImporter:
         width: 54
         height: 105
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: slime_8
       rect:
@@ -149,7 +149,7 @@ TextureImporter:
         width: 58
         height: 60
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: slime_9
       rect:
@@ -159,7 +159,7 @@ TextureImporter:
         width: 57
         height: 58
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
     - name: slime_10
       rect:
@@ -169,7 +169,7 @@ TextureImporter:
         width: 50
         height: 103
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
   spritePackingTag: 
   userData: 
