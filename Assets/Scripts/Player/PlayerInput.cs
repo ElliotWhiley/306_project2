@@ -39,18 +39,26 @@ public class PlayerInput : MonoBehaviour {
 	AudioSource audio;
 
     //Replay recordings
-    public static List<Vector3> movementInputs = new List<Vector3>();
-    public static List<Vector2> jumpInputs = new List<Vector2>();
-    public static List<Vector3> movementReplayInputs = new List<Vector3>();
-    public static List<Vector2> jumpReplayInputs = new List<Vector2>();
+    // public static List<Vector3> movementInputs = new List<Vector3>();
+    //  public static List<Vector2> jumpInputs = new List<Vector2>();
+    //  public static List<Vector3> movementReplayInputs = new List<Vector3>();
+    //  public static List<Vector2> jumpReplayInputs = new List<Vector2>();
+
+    public static List<Vector4> currentPosition = new List<Vector4>();
+    public static List<Vector4> currentReplayPosition = new List<Vector4>();
+
     public int counter = 0; //counter for replay frame purposes.
     public string replay; //contains the replay string from the database (if any).
+
+    public int debugCounter = 0;
 
     /**Initialisation */
     void Start () {
 		//The controller is what handles our movement in the game world
 		controller = GetComponent<PlayerPhysics> ();
 		audio = GetComponent<AudioSource> ();
+
+        
 
 		//Gravity setup
 		gravity = -(2 * jumpHeight) / Mathf.Pow (timeToJumpApex, 2);
@@ -61,6 +69,8 @@ public class PlayerInput : MonoBehaviour {
 		airCharge = 0;
 
 
+
+
 		//Collision checking for wall sliding speed
 		collisionEnter = false;
 		collisionContinuing = false;
@@ -68,16 +78,20 @@ public class PlayerInput : MonoBehaviour {
 
         if(PlayerPrefs.GetInt("isReplay") == 1)
         {
-            movementReplayInputs = new List<Vector3>();
-            jumpReplayInputs = new List<Vector2>();
+            //movementReplayInputs = new List<Vector3>();
+            //jumpReplayInputs = new List<Vector2>();
+            currentReplayPosition = new List<Vector4>();
             ProcessReplay(PlayerPrefs.GetString("replayString"));
         }
         else
         {
-            movementInputs = new List<Vector3>();
-            jumpInputs = new List<Vector2>();
-            jumpReplayInputs = new List<Vector2>();
-            jumpReplayInputs.Add(new Vector2(0, 0));
+            currentReplayPosition = new List<Vector4>();
+            ProcessReplay(PlayerPrefs.GetString("replayString"));
+
+            //movementInputs = new List<Vector3>();
+            //jumpInputs = new List<Vector2>();
+            //jumpReplayInputs = new List<Vector2>();
+            //jumpReplayInputs.Add(new Vector2(0, 0));
         }
 
         counter = 0;
@@ -121,14 +135,14 @@ public class PlayerInput : MonoBehaviour {
 
 
         Vector2 input;
-        Vector3 replayInput;
+        Vector4 replayInput = new Vector4();
         //Get keyboard input
       
         if(PlayerPrefs.GetInt("isReplay") == 1)//true if isReplay string is true i.e. it's a replay.
         {
             replayInput = GetInputFromReplay();
             //Debug.Log(counter);
-            Debug.Log(jumpReplayInputs[counter]);
+            //Debug.Log(jumpReplayInputs[counter]);
             input.x = replayInput.y;
             input.y = replayInput.z;
         }
@@ -168,7 +182,7 @@ public class PlayerInput : MonoBehaviour {
 
 
 		//When the jump button is pressed.
-		if ((Input.GetKeyDown (KeyCode.Space) && PlayerPrefs.GetInt("isReplay") == 0) || (jumpReplayInputs[counter].y > 0.5 && PlayerPrefs.GetInt("isReplay") == 1)) {
+		if ((Input.GetKeyDown (KeyCode.Space) && PlayerPrefs.GetInt("isReplay") == 0)) {
             Debug.Log("Jump is pressed");
             //Simply jump if the object is on the ground. 
 			if (TouchingGround () || jumpDelay != 0) {
@@ -220,8 +234,22 @@ public class PlayerInput : MonoBehaviour {
 			velocity.y += gravity * Time.deltaTime;
 		}
 
-		//The controller is given a veloity to move the player by
-		controller.Move (velocity * Time.deltaTime);
+		//The controller is given a velocity to move the player by
+        if(PlayerPrefs.GetInt("isReplay") == 0)
+        {
+          
+            controller.Move(velocity * Time.deltaTime);
+        }
+		else
+        {
+            //  Debug.Log(currentReplayPosition[counter]);
+            //Debug.Log("I am called");
+            //Debug.Log(debugCounter);
+            debugCounter++;
+            controller.transform.position = new Vector3(currentReplayPosition[counter].y, currentReplayPosition[counter].z, currentReplayPosition[counter].w);
+           // controller.transform.position = new Vector3(replayInput.x, replayInput.y, replayInput.z);
+
+        }
 	}
 
 	/**
@@ -251,9 +279,15 @@ public class PlayerInput : MonoBehaviour {
         {
             jumpPressed = 0f;
         }
-
-        movementInputs.Add(new Vector3(input.x, input.y, Time.timeSinceLevelLoad - delay));
-        jumpInputs.Add(new Vector2(jumpPressed, Time.timeSinceLevelLoad - delay));
+        
+        currentPosition.Add(new Vector4(controller.transform.position.x, controller.transform.position.y, controller.transform.position.z, Time.timeSinceLevelLoad - delay));
+        //Debug.Log(currentPosition[currentPosition.Count - 1]);
+        //Debug.Log(currentPosition[currentPosition.Count - 1].w);
+        //Debug.Log(currentPosition[currentPosition.Count - 1].x);
+        //Debug.Log(currentPosition[currentPosition.Count - 1].y);
+        //Debug.Log(currentPosition[currentPosition.Count - 1].z);
+        
+        //jumpInputs.Add(new Vector2(jumpPressed, Time.timeSinceLevelLoad - delay));
     }
 
     void ProcessReplay(string replayString)
@@ -268,72 +302,104 @@ public class PlayerInput : MonoBehaviour {
 
         string[] line1 = split[0].Split(delimiters);
         string[] line2 = split[1].Split(delimiters);
-        string[] line3 = split[2].Split(delimiters);
+
+        for(int i = 0; i < line2.Length; i++)
+        {
+            //Debug.Log(line2[i]);
+        }
+        
 
 
         //convert the replay string sections into vector inputs to feed into the program.
-        for (int i = 0; i < line2.Length - 2; i = i + 3)
+        for (int i = 0; i < line2.Length - 3; i = i + 4)
         {
-            movementReplayInputs.Add(new Vector3(float.Parse(line2[i + 2]), float.Parse(line2[i]), float.Parse(line2[i + 1])));
+            currentReplayPosition.Add(new Vector4(float.Parse(line2[i + 3]), float.Parse(line2[i]), float.Parse(line2[i + 1]), float.Parse(line2[i+2])));
+           // movementReplayInputs.Add(new Vector3(float.Parse(line2[i + 2]), float.Parse(line2[i]), float.Parse(line2[i + 1])));
 
 
         }
-        for (int i = 0; i < line3.Length - 1; i = i + 2)
-        {
-            jumpReplayInputs.Add(new Vector2(float.Parse(line3[i + 1]), float.Parse(line3[i])));
+        //for (int i = 0; i < line3.Length - 1; i = i + 2)
+        //{
+          //  jumpReplayInputs.Add(new Vector2(float.Parse(line3[i + 1]), float.Parse(line3[i])));
 
 
-        }
+        //}
 
         Debug.Log("Finished processing replay");
-        for(int i = 0; i < jumpInputs.Count; i++)
-        {
+        //for(int i = 0; i < jumpInputs.Count; i++)
+        //{
            //Debug.Log(jumpReplayInputs[i]);
-        }
+        //}
        
     }
 
     //From a replay string, get the current input that should be fed into unity.
-    Vector3 GetInputFromReplay()
+    Vector4 GetInputFromReplay()
     {
-        for (int i = counter; i < movementReplayInputs.Count; i++)
+
+        for(int i = 0; i < currentReplayPosition.Count; i++)
         {
-            if (movementReplayInputs[i].x > Time.timeSinceLevelLoad - delay && 
-                movementReplayInputs[i].x < Time.timeSinceLevelLoad - delay + 0.2 )
+           if(currentReplayPosition[i].x > Time.timeSinceLevelLoad - delay)
             {
                 counter = i;
 
-                if(movementReplayInputs[i].x > 0.3 && i < movementReplayInputs.Count - 3)//after at least a couple of frames has passed.
+                if (i == currentReplayPosition.Count - 1|| i == currentReplayPosition.Count - 2 || i == currentReplayPosition.Count - 3)
                 {
-                    if(jumpReplayInputs[i].y == 0 && (jumpReplayInputs[i+1].y == 1 || jumpReplayInputs[i+2].y == 1 || jumpReplayInputs[i+3].y == 1))
-                    {
-                        if(jumpReplayInputs[i+1].y == 1)
-                        {
-                            counter = i + 1;
-                        }
-                        else if(jumpReplayInputs[i+2].y == 1)
-                        {
-                            counter = i + 2;
-                        }
-                        else if(jumpReplayInputs[i+3].y == 1)
-                        {
-                            counter = i + 3;
-                        }
-                        
-                    }
+                    Debug.Log("Last frames called");
+                    currentReplayPosition[i] = new Vector4(currentReplayPosition[i].x, currentReplayPosition[i].y, currentReplayPosition[i].z - 0.1f, currentReplayPosition[i].w);
+                    //currentReplayPosition[i].Set(currentReplayPosition[i].x, currentReplayPosition[i].y, currentReplayPosition[i].z - 0.2f, currentReplayPosition[i].w);
 
-                    if(jumpReplayInputs[i].y == 1)
-                    {
-                        counter = i + 1;
-                    }
-                  
                 }
+                // Debug.Log(currentReplayPosition[counter]);
+                return currentReplayPosition[counter];
 
-                return movementReplayInputs[counter];
-
+             
             }
+
+            
+            
+
         }
-        return movementReplayInputs[counter];
+
+        return currentReplayPosition[counter];
+        // for (int i = counter; i < movementReplayInputs.Count; i++)
+        //{
+        //  if (movementReplayInputs[i].x > Time.timeSinceLevelLoad - delay && 
+        //    movementReplayInputs[i].x < Time.timeSinceLevelLoad - delay + 0.2 )
+        //{
+        //  counter = i;
+
+        //if(movementReplayInputs[i].x > 0.3 && i < movementReplayInputs.Count - 3)//after at least a couple of frames has passed.
+        //{
+        //  if(jumpReplayInputs[i].y == 0 && (jumpReplayInputs[i+1].y == 1 || jumpReplayInputs[i+2].y == 1 || jumpReplayInputs[i+3].y == 1))
+        // {
+        //   if(jumpReplayInputs[i+1].y == 1)
+        // {
+        //   counter = i + 1;
+        //}
+        //else if(jumpReplayInputs[i+2].y == 1)
+        //{
+        //  counter = i + 2;
+        //}
+        //else if(jumpReplayInputs[i+3].y == 1)
+        //{
+        //  counter = i + 3;
+        //}
+
+        //}
+
+        //if(jumpReplayInputs[i].y == 1)
+        //{
+        //  counter = i + 1;
+        //}
+
+        //}
+
+        //return movementReplayInputs[counter];
+
+        //}
+        //}
+        //return movementReplayInputs[counter];
     }
 
     //#################

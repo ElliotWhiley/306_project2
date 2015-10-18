@@ -103,25 +103,32 @@ public class EndPoint : MonoBehaviour {
     //Create the replayString to send to the database.
     void MakeReplayString()
     {
-        for(int i = 0; i < PlayerInput.movementInputs.Count; i++)
+        
+        for(int i = 0; i < PlayerInput.currentPosition.Count; i++)
         {
-            replayString = replayString + PlayerInput.movementInputs[i].x + "," + PlayerInput.movementInputs[i].y + "," + PlayerInput.movementInputs[i].z + ";";
+            replayString = replayString + PlayerInput.currentPosition[i].x + "," + PlayerInput.currentPosition[i].y + "," + PlayerInput.currentPosition[i].z + "," + PlayerInput.currentPosition[i].w + ";";
+            if(i == PlayerInput.currentPosition.Count - 1)
+            {
+                replayString = replayString + PlayerInput.currentPosition[i].x + "," + (PlayerInput.currentPosition[i].y) + "," + PlayerInput.currentPosition[i].z + "," + PlayerInput.currentPosition[i].w + ";";
+            }
 
         }
+
+        
 
         replayString = replayString + System.Environment.NewLine;
 
-        for(int i = 0; i < PlayerInput.jumpInputs.Count; i++)
-        {
-            replayString = replayString + PlayerInput.jumpInputs[i].x + "," + PlayerInput.jumpInputs[i].y + ";";
-        }
+        //for(int i = 0; i < PlayerInput.jumpInputs.Count; i++)
+        //{
+          //  replayString = replayString + PlayerInput.jumpInputs[i].x + "," + PlayerInput.jumpInputs[i].y + ";";
+        //}
 
         replayString = Application.loadedLevelName + System.Environment.NewLine + replayString;
 
 
         PlayerPrefs.SetString("replayString", replayString);
 
-
+        Debug.Log(replayString);
         Debug.Log("Finished making replay string.");
     }
 }
