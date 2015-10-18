@@ -66,15 +66,18 @@ public class LeaderboardPopulator : MonoBehaviour {
             {
                 string name = obj.list[j].list[0].str;
                 string time = obj.list[j].list[1].str;
+                string guid = obj.list[j].list[3].str;
 
                 TList2D[j, levelNumber - 1].Player.text = name;
                 TList2D[j, levelNumber - 1].Time.text = time;
+                TList2D[j, levelNumber - 1].guid = guid;
             }
             ProgressCircle.SetActive(false);
         }
         else
         {
             Debug.Log("WWW Error: " + www.error);
+            ProgressCircle.SetActive(false);
         }
     }
 }

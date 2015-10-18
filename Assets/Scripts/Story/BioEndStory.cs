@@ -65,13 +65,13 @@ public class BioEndStory : MonoBehaviour {
 			countIntro++;
 
 		}else if (countIntro == 8){
-			setElonText ("Elon: I have something to show you...");
+			setElonText ("Elon: I have something to show you, meet me in the physics lab...");
 			countIntro++;
 
 		}else if (countIntro == 9){
 			//ChangeImage("bam");
 			//StartCoroutine("ChangeScene");
-			Application.LoadLevel(3);
+			Application.LoadLevel("level3");
 		}
 	}
 
@@ -80,6 +80,6 @@ public class BioEndStory : MonoBehaviour {
 	}
 
 	public void skipped(){
-		Application.LoadLevel(3);
+		Application.LoadLevel("level3");
 	}
 }

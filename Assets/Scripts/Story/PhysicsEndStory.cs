@@ -40,7 +40,7 @@ public class PhysicsEndStory : MonoBehaviour {
 			setEvilText ("Creator: Do what you have to do.");
 			countIntro++;
 		}else if (countIntro == 5){
-			Application.LoadLevel(3);
+			Application.LoadLevel("level4");
 		}
 	}
 	
@@ -49,6 +49,6 @@ public class PhysicsEndStory : MonoBehaviour {
 	}
 	
 	public void skipped(){
-		Application.LoadLevel(3);
+		Application.LoadLevel("level4");
 	}
 }

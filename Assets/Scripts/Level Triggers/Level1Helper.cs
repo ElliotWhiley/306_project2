@@ -20,15 +20,15 @@ public class Level1Helper : MonoBehaviour {
 		if (gameObject.tag == "Helper1") {
 			helperText.setText("Press spacebar to jump.");
 		} else if (gameObject.tag == "Helper2") {
-			helperText.setText("Press spacebar twice rapidly to double jump.");
+			helperText.setText("Press spacebar again while in the air to double jump.");
 		} else if (gameObject.tag == "Helper3") {
-			helperText.setText("Find and crack Dr. Ros' DEADLY chemical jars for bonus points!");
+			helperText.setText("Watch out for dangerous lab equipment!");
 		} else if (gameObject.tag == "Helper4") {
-			helperText.setText("Collect coins for bonus rewards!");
+			helperText.setText("Collect coins to subtract 1 second from your time, and to unlock new skins!");
 		} else if (gameObject.tag == "Helper5") {
-			helperText.setText("Be careful not to fall! There will be penalities");
+			helperText.setText("The faster you complete the levels, the higher your chances of unlocking a coin jackpot!");
 		} else if (gameObject.tag == "Helper6") {
-			helperText.setText("You can stick onto walls and jump off them continuously");
+			helperText.setText("You can stick to walls temporarily and jump between them to 'wall jump'.");
 		}
 	}
 }

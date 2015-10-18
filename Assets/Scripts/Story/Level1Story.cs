@@ -40,19 +40,13 @@ public class Level1Story : MonoBehaviour {
 			countIntro++;
 		} else if (countIntro == 1) {
 			setFlubText ("");
-			setEvilText ("Voice: This is Elon Bohr's lab");
+			setEvilText ("Voice: This is Elon Bohr's chemistry lab");
 			countIntro++;
 
 		} else if (countIntro == 2) {
 			setEvilText ("Voice: He created you to sabotage those who oppose him.");
 			countIntro++;
 
-		
-			//btnText.text = "";
-			//StopCoroutine ("multipleTexts1");
-			//StartCoroutine ("multipleTexts1");
-			//multipleTexts ("Voice: Thank god!", "You made it!", "Voice: Things were looking pretty hairy for a while back there.");
-			//countIntro++;
 		} else if (countIntro == 3) {
 			setEvilText ("");
 			setFlubText ("Flubba: Then how come I'm talking to you?");
@@ -68,15 +62,12 @@ public class Level1Story : MonoBehaviour {
 			countIntro++;
 
 		}else if (countIntro == 6){
-			Application.LoadLevel(3);
-			//StopCoroutine ("multipleTexts2");
-			//StartCoroutine ("multipleTexts2");
-			//multipleTexts("Voice: That doesn't matter right now.", "Voice: Right now you just need to get out of here.","Voice: Don't worry, I'll help you.");
+			Application.LoadLevel("level2");
 		}
 	}
 
 
 	public void skipped(){
-		Application.LoadLevel(3);
+		Application.LoadLevel("level2");
 	}
 }

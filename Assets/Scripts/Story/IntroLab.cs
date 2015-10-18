@@ -11,12 +11,12 @@ public class IntroLab : MonoBehaviour {
 	//public Text btnText;
 	private int countIntro = -1;
 	ButtonText contButton;
-	Fader fader;
+	//Fader fader;
 	
 	// Use this for initialization
 	void Start () {
 		setText("\"Knife..\"");
-		setFlubText("Flubba: Huh?");
+		//setFlubText("Flubba: Huh?");
 	}
 	
 	// Update is called once per frame
@@ -55,12 +55,12 @@ public class IntroLab : MonoBehaviour {
 		} else if (count == 4) {
 			//Fader fader;
 			//fader.EndScene();
-			Application.LoadLevel (5);
+			Application.LoadLevel ("intro_tutorial2");
 		}
 		
 	}
 
 	public void skipped(){
-		Application.LoadLevel(5);
+		Application.LoadLevel("level1");
 	}
 }

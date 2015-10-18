@@ -70,6 +70,6 @@ public class Fader : MonoBehaviour
 		// If the screen is almost black...
 		if(GetComponent<GUITexture>().color.a >= 0.95f)
 			// ... reload the level.
-			Application.LoadLevel(5);
+			Application.LoadLevel("level2");
 	}
 }

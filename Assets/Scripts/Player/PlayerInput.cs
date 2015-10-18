@@ -346,7 +346,7 @@ public class PlayerInput : MonoBehaviour {
                 if (i == currentReplayPosition.Count - 1|| i == currentReplayPosition.Count - 2 || i == currentReplayPosition.Count - 3)
                 {
                     Debug.Log("Last frames called");
-                    currentReplayPosition[i] = new Vector4(currentReplayPosition[i].x, currentReplayPosition[i].y, currentReplayPosition[i].z - 0.1f, currentReplayPosition[i].w);
+                    currentReplayPosition[i] = new Vector4(currentReplayPosition[i].x, currentReplayPosition[i].y, currentReplayPosition[i].z - 0.2f, currentReplayPosition[i].w);
                     //currentReplayPosition[i].Set(currentReplayPosition[i].x, currentReplayPosition[i].y, currentReplayPosition[i].z - 0.2f, currentReplayPosition[i].w);
 
                 }

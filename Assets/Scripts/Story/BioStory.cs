@@ -31,11 +31,11 @@ public class BioStory : MonoBehaviour {
 			setEvilText ("Voice: You're going to have to kill him if you want any chance of escaping.");
 			countIntro++;
 		} else if (countIntro == 3) {
-			Application.LoadLevel(1);
+			Application.LoadLevel("end_bio");
 		}
 	}
 
 	public void skipped(){
-		Application.LoadLevel(3);
+		Application.LoadLevel("level3");
 	}
 }
