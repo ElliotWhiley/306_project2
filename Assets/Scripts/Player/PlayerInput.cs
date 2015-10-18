@@ -14,6 +14,7 @@ public class PlayerInput : MonoBehaviour {
 	float timeToJumpApex = .4f;
 	float accelerationTimeGrounded = .08f;
 	float moveSpeed = 6;
+	float slidingSpeed = 1.8f;
 	float slidingCoefficient = 0.2f;
 	float airborneAccelSlow = .35f;
 	float airborneAccelFast = 0.13f;
@@ -211,7 +212,12 @@ public class PlayerInput : MonoBehaviour {
 				//Reduce verical velocity by a factor of 10
 				velocity.y /= 10;
 			}
-			velocity.y += gravity * Time.deltaTime * slidingCoefficient;
+
+			if (velocity.y > -slidingSpeed){
+				velocity.y += gravity * Time.deltaTime * slidingCoefficient;
+			} else {
+				velocity.y = -slidingSpeed;
+			}
 		} else {
 			velocity.y += gravity * Time.deltaTime;
 		}

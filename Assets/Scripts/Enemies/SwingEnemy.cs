@@ -16,7 +16,7 @@ public class SwingEnemy : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        InvokeRepeating("Swing",3,0.05F);
+        InvokeRepeating("Swing",3,0.02F);
 	}
 	
 	// Update is called once per frame
@@ -67,11 +67,11 @@ public class SwingEnemy : MonoBehaviour {
 
     void Accelerate()
     {
-        swingVelocity = swingVelocity + 0.7f;
+        swingVelocity = swingVelocity + 0.16f;
     }
 
     void Decelerate()
     {
-        swingVelocity = swingVelocity - 0.7f;
+        swingVelocity = swingVelocity - 0.16f;
     }
 }
